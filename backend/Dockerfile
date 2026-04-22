@@ -1,7 +1,7 @@
 # ---- Stage 1: Builder ----
 # We use a full node image to install ALL dependencies including devDependencies
 # devDependencies are needed to run tests (jest, supertest)
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -29,7 +29,7 @@ COPY . .
 # Start fresh with a clean image
 # We DON'T copy node_modules from builder
 # We only install production dependencies (smaller image, no jest/supertest in prod)
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
