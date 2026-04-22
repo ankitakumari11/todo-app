@@ -1,0 +1,61 @@
+version: '3.8'
+
+# This file is ONLY for local development and testing
+# We never use docker-compose in Kubernetes
+# It lets you test the whole stack on your laptop before pushing to K8s
+
+services:
+
+  mongodb:
+    image: mongo:6
+    container_name: todo-mongo
+    ports:
+      - "27017:27017"       # expose to localhost for debugging with MongoDB Compass
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - mongo-data:/data/db  # persist data so todos survive container restart
+
+  backend:
+    build: ./backend
+    container_name: todo-backend
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://admin:password123@mongodb:27017/tododb?authSource=admin
+      PORT: 5000
+      NODE_ENV: development
+    depends_on:
+      - mongodb              # start mongodb first before backend
+
+  frontend:
+    build: ./frontend
+    container_name: todo-frontend
+    ports:
+      - "3000:80"            # access app at http://localhost:3000
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:               # named volume — survives docker-compose down
+
+
+
+# User → http://localhost:3000
+#        ↓
+# Frontend container (Nginx)
+#        ↓
+# index.html loads
+#        ↓
+# JS calls /api/todos
+#        ↓
+# Nginx forwards to backend container
+#        ↓
+# backend/src/index.js
+#        ↓
+# routes/todos.js
+#        ↓
+# MongoDB container
+#        ↓
+# Response back → UI updates

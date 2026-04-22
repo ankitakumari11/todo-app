@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+tests
+coverage
+.env
+*.md
+
+# ".dockerignore is used to exclude unnecessary or sensitive files like node_modules, tests, coverage, and .env from the Docker build context.
+
+# 👉 Docker copies everything EXCEPT what’s in .dockerignore.
