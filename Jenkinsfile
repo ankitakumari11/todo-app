@@ -16,9 +16,9 @@ pipeline {
     }
 
     tools {
-        // 'nodejs-18' must match the name you set in
+        // 'nodejs-20' must match the name you set in
         // Jenkins > Manage Jenkins > Global Tool Configuration > NodeJS
-        nodejs 'nodejs-18'
+        nodejs 'nodejs-20'
     }
 
     stages {
