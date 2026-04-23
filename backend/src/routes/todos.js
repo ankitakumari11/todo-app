@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Todo = require('../models/Todo');
+const mongoose = require('mongoose');
 
 // GET /api/todos — fetch all todos, newest first
+// router.get('/', async (req, res) => {
+//   try {
+//     const todos = await Todo.find().sort({ createdAt: -1 });
+//     res.json(todos);
+//   } catch (err) {
+//     res.status(500).json({ message: 'Server error', error: err.message });
+//   }
+// });
 router.get('/', async (req, res) => {
   try {
+    // If DB not connected, fail fast
+    if (mongoose.connection.readyState !==1) {
+      return res.status(500).json({ message: 'DB not connected' });
+    }
+
     const todos = await Todo.find().sort({ createdAt: -1 });
     res.json(todos);
   } catch (err) {
