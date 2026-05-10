@@ -24,7 +24,6 @@ COPY . .
 #  └── all project files
 
 
-
 # ---------------------------- Stage 2: Production -----------------------------------------
 # Start fresh with a clean image
 # We DON'T copy node_modules from builder
@@ -64,3 +63,29 @@ CMD ["node", "src/index.js"]
 # Keeps pattern consistent
 # Future-ready (if you enable tests in container)
 # Separates dev vs prod dependencies
+
+
+# npm ci = “clean install” (for CI/CD environments)
+# 👉 It installs dependencies exactly as locked in package-lock.json
+# Key behavior:
+# Deletes existing node_modules
+# Installs exact versions from package-lock.json
+# Fails if package.json and lock file don’t match
+# Faster and more predictable than npm install
+
+
+# 🔹 What is npm ci --only=production (or --prod)?
+# This installs only production dependencies, skipping dev ones.
+# From your package.json:
+# Installed:
+# "dependencies": {
+#   "express": "...",
+#   "mongoose": "...",
+#   "cors": "...",
+#   "dotenv": "..."
+# }
+# NOT installed:
+# "devDependencies": {
+#   "jest": "...",
+#   "supertest": "..."
+# }

@@ -120,7 +120,7 @@ pipeline {
                 echo '🚦 Stage 5: Checking SonarQube Quality Gate result...'
                 timeout(time: 5, unit: 'MINUTES') {
                     // Wait up to 5 mins for SonarQube to respond
-                    // abortPipeline: true means fail the build if gate fails
+                    // abortPipeline: true means fail the build if gate fails -> Fail pipeline if Quality Gate fails
                     waitForQualityGate abortPipeline: true
                 }
             }

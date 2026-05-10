@@ -35,3 +35,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Export app so supertest can import it in tests
 module.exports = app;
+
+
+
+// Express.js (or simply Express) is a minimal and flexible web application framework for Node.js. It is designed to make building web applications and APIs much faster and easier by providing a robust set of features that sit on top of Node's built-in capabilities. 

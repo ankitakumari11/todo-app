@@ -12,6 +12,8 @@ const mongoose = require('mongoose');
 //     res.status(500).json({ message: 'Server error', error: err.message });
 //   }
 // });
+
+// GET /api/todos — fetch all todos, newest first
 router.get('/', async (req, res) => {
   try {
     // If DB not connected, fail fast
